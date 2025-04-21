@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>网盘提取码</title>
+    <title>一键复制网盘口令</title>
     <style>
         * {
             margin: 0;
@@ -87,10 +87,10 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">网盘提取码</div>
-        <div class="info-item">适用网盘：<span id="type"></span></div>
-        <div class="password-display">提取码：<span id="password"></span></div>
-        <button class="copy-btn" id="copyBtn">复制提取码</button>
+        <div class="header">网盘口令</div>
+        <div class="info-item">对应网盘：<span id="type"></span></div>
+        <div class="password-display">口令：<span id="password"></span></div>
+        <button class="copy-btn" id="copyBtn">复制口令</button>
     </div>
 
     <div class="toast" id="toast">复制成功！</div>
@@ -113,7 +113,7 @@
             try {
                 await navigator.clipboard.writeText(password);
                 toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 2000); // 显示2秒
+                setTimeout(() => toast.classList.remove('show'), 4000); // 显示2秒
             } catch (error) {
                 console.error('复制失败:', error);
             }
