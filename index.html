@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网盘提取码</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f7fa;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem 3rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .info-item {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .password-display {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #2c3e50;
+            margin: 1rem 0;
+            white-space: nowrap; /* 防止口令换行 */
+        }
+
+        .copy-btn {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            background-color: #2ecc71; /* 绿色 */
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background-color: #27ae60;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #34495e;
+            color: white;
+            border-radius: 25px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">网盘提取码</div>
+        <div class="info-item">适用网盘：<span id="type"></span></div>
+        <div class="password-display">提取码：<span id="password"></span></div>
+        <button class="copy-btn" id="copyBtn">复制提取码</button>
+    </div>
+
+    <div class="toast" id="toast">复制成功！</div>
+
+    <script>
+        // 获取URL参数
+        const params = new URLSearchParams(window.location.search);
+        const type = params.get('type') || '未知网盘';
+        const password = params.get('password') || '无';
+
+        // 渲染内容
+        document.getElementById('type').textContent = type;
+        document.getElementById('password').textContent = password;
+
+        // 复制功能
+        const copyBtn = document.getElementById('copyBtn');
+        const toast = document.getElementById('toast');
+
+        copyBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(password);
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2000); // 显示2秒
+            } catch (error) {
+                console.error('复制失败:', error);
+            }
+        });
+    </script>
+</body>
+</html>
